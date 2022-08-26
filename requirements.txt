@@ -41,7 +41,6 @@ numpy==1.23.0
 outcome==1.2.0
 packaging==21.3
 pafy==0.5.5
-pandas==1.4.3
 Pillow==9.1.1
 pipreqs==0.4.11
 platformdirs==2.5.2
@@ -57,7 +56,7 @@ pyperclip==1.8.2
 PyRect==0.2.0
 PyScreeze==0.1.28
 PySocks==1.7.1
-python-dateutil==2.8.2
+python-dateutil==1.5
 python-dotenv==0.20.0
 python-vlc==3.0.16120
 pytweening==1.0.4
