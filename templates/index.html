@@ -30,11 +30,9 @@
 
 
 
-<body style="background-color:white">
+<body style="background-color:#7A86B6">
 
-  <div class="all-container">
 
-    <section style="background-color:white;" class="vh-100 gradient-custom">
       <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col col-xl-10">
@@ -42,18 +40,37 @@
             <div class="card">
               <div class="card-body p-5">
 
+                        <div class="notify">
+
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class=flashes>
+                {% for message in messages %}
+                  <h4>{{ message }}</h4>
+                {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+
+        </div>
+
                   <div class="welcome">
-                        <h3>Welcome Finan</h3>
-                        <a href="#">
+
+                      <div class="logout">
+
+                          <a href="{{ url_for('logout') }}">
                             <i style="color:black;" class="fa-solid fa-right-from-bracket fa-2xl"></i>
-                        </a>
+                          </a>
+
+                      </div>
+
                    </div>
 
                 <form method="post" action="{{ url_for('add') }}" class="d-flex justify-content-center align-items-center mb-4">
                   <div class="form-outline flex-fill">
                     <input required name=task type="text" id="form2" class="form-control" placeholder="Enter task ..."/>
                   </div>
-                  <button type="submit" class="btn btn-info ms-2">Add</button>
+                  <button type="submit" class="btn btn-info ms-2">ADD</button>
                 </form>
 
 
@@ -81,8 +98,6 @@
                 <!-- Tabs navs -->
 
 
-
-
                 <!-- Tabs content -->
 
 
@@ -97,7 +112,8 @@
                                           <a href="{{ url_for('done', task_id=task.id) }}"> <i class="fa-solid fa-check"></i> </a></button>
                                         <button class="btn">
                                           <a href="{{ url_for('delete', task_id=task.id) }}"> <i class="fa-solid fa-circle-minus"></i> </a></button>
-                                        <p> {{  task.task | safe }} </p>
+                                        <p style="padding-right:5px;"> {{ task.date }} </p>
+                                        <p>  | {{  task.task | safe }}  </p>
 
                                       </p>
                                     </li>
@@ -110,12 +126,10 @@
                     </div>
 
 
-
                 </div>
 
 
                 <!-- Tabs content -->
-
 
 
               </div>
@@ -124,9 +138,6 @@
           </div>
         </div>
       </div>
-    </section>
-
-  </div>
 
 
 </body>
