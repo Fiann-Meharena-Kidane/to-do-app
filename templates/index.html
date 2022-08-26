@@ -110,10 +110,14 @@
                                       <p>
                                         <button class="btn">
                                           <a href="{{ url_for('done', task_id=task.id) }}"> <i class="fa-solid fa-check"></i> </a></button>
-                                        <button class="btn">
-                                          <a href="{{ url_for('delete', task_id=task.id) }}"> <i class="fa-solid fa-circle-minus"></i> </a></button>
                                         <p style="padding-right:5px;"> {{ task.date }} </p>
-                                        <p>  | {{  task.task | safe }}  </p>
+                                        <p>  | {{  task.task | safe }}
+                                             <button class="btn">
+                                          <a href="{{ url_for('delete', task_id=task.id) }}"> <i class="fa-solid fa-circle-minus"></i> </a>
+                                        </button>
+
+                                        </p>
+
 
                                       </p>
                                     </li>
