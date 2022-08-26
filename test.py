@@ -1,4 +1,5 @@
+import os
 
+var=os.environ.get('finan-to-do-app-secret')
 
-
-print(date)
+print(var)

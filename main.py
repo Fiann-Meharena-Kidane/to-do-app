@@ -14,7 +14,7 @@ today = date.today()
 from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret'
+app.config['SECRET_KEY'] = os.environ.get('finan-to-do-app-secret')
 
 
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///todo.db'
