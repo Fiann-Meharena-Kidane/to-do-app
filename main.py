@@ -16,8 +16,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('finan-to-do-app-secret')
 
 
-app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL','LOCAL_DB_URL')
-# app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL','sqlite:///todo.db')
+# app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL','LOCAL_DB_URL')
+app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL','sqlite:///todo.db')
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
