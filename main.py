@@ -16,6 +16,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('finan-to-do-app-secret')
 
 
+
+
 try:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('LOCAL_DB_URL')
 except:
