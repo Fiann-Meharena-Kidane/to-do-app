@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, url_for, flash
-from flask_login import LoginManager, login_user, logout_user, UserMixin, current_user
+from flask_login import LoginManager, login_user, logout_user, UserMixin, current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String, Text, Boolean, ForeignKey
 
@@ -22,9 +22,6 @@ try:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('LOCAL_DB_URL')
 except:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-
-
-#
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -66,14 +63,15 @@ def login():
     if request.method=='POST':
         email=request.form.get('email')
         password=request.form.get('password')
-
+        # get user credentials
         user=User.query.filter_by(email=email).first()
-
+        # if user found in our db,
         if user:
             if check_password_hash(user.password, password):
                 login_user(user)
                 flash(f'Welcome {user.name}!')
                 return redirect(url_for('home'))
+            # login user and redirect to home
             else:
                 flash('Incorrect password, try again')
                 return redirect(url_for('login'))
@@ -86,10 +84,11 @@ def login():
 
 
 @app.route('/home')
+@login_required
 def home():
-    # tasks=current_user.tasks
-    # all_tasks_rows = Task.query.all()
+
     all_tasks_rows = current_user.tasks
+    # display tasks which belong only to the current user
 
     return render_template('index.html', tasks=all_tasks_rows, year=current_year)
 
@@ -102,6 +101,7 @@ def register():
         password=request.form.get('password')
 
         if not User.query.filter_by(email=email).first():
+            # if email is not registered,
             hashed_password=generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
             new_user=User(
                 name=name,
@@ -114,6 +114,7 @@ def register():
             login_user(new_user)
             flash(f'Welcome {name}!')
             return redirect(url_for('home'))
+        # add user, redirect user to homepage
         else:
             flash("Email already exits, login instead")
             return redirect(url_for('login'))
@@ -122,6 +123,7 @@ def register():
 
 
 @app.route('/add', methods=['POST', 'GET'])
+@login_required
 def add():
     task = request.form.get('task')
 
@@ -139,16 +141,19 @@ def add():
 
 
 @app.route('/done/<int:task_id>')
+@login_required
 def done(task_id):
     target_task=Task.query.filter_by(id=task_id).first()
     dashed_task=f"<s>{target_task.task}</s>"
     target_task.task=dashed_task
     target_task.status='done'
+    # get the selected task, modify its structure that it is rendered as a dashed
     db.session.commit()
     return redirect(url_for('home'))
 
 
 @app.route('/delete/<int:task_id>')
+@login_required
 def delete(task_id):
     target_task=Task.query.filter_by(id=task_id).first()
 
@@ -162,6 +167,8 @@ def delete(task_id):
 def active():
     list_of_active_task=[]
     all_active_tasks=Task.query.filter_by(status='active')
+    # get all active ones, then filter only those with id same as the current user,
+
     for task in all_active_tasks:
         if task.user_id==current_user.id:
             list_of_active_task.append(task)
