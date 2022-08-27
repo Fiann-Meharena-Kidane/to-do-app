@@ -10,8 +10,7 @@ from sqlalchemy.orm import relationship
 from werkzeug.security import generate_password_hash, check_password_hash
 
 today = date.today()
-
-
+current_year = date.today().year
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('finan-to-do-app-secret')
@@ -73,7 +72,7 @@ def login():
             return redirect('register')
     else:
 
-        return render_template('login.html')
+        return render_template('login.html', year=current_year)
 
 
 @app.route('/home')
@@ -82,7 +81,7 @@ def home():
     # all_tasks_rows = Task.query.all()
     all_tasks_rows = current_user.tasks
 
-    return render_template('index.html', tasks=all_tasks_rows)
+    return render_template('index.html', tasks=all_tasks_rows, year=current_year)
 
 
 @app.route('/register', methods=['POST','GET'])
@@ -109,7 +108,7 @@ def register():
             flash("Email already exits, login instead")
             return redirect(url_for('login'))
 
-    return render_template('register.html')
+    return render_template('register.html', year=current_year)
 
 
 @app.route('/add', methods=['POST', 'GET'])
@@ -174,6 +173,7 @@ def completed():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
