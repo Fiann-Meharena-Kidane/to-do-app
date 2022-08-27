@@ -7,17 +7,17 @@ import os
 from datetime import date
 
 from sqlalchemy.orm import relationship
+from werkzeug.security import generate_password_hash, check_password_hash
 
 today = date.today()
 
 
-from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('finan-to-do-app-secret')
 
 
-app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///todo.db'
+app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL','sqlite:///todo.db' )
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
