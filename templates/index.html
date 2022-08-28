@@ -91,8 +91,8 @@
                   </li>
 
                     <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="ex1-tab-4" data-mdb-toggle="tab" href="#" role="tab"
-                      aria-controls="ex1-tabs-3" aria-selected="true">Reminder</a>
+                    <a class="nav-link active" id="ex1-tab-4" data-mdb-toggle="tab" href="{{ url_for('progress') }}" role="tab"
+                      aria-controls="ex1-tabs-3" aria-selected="true">Progress</a>
                   </li>
                 </ul >
                 <!-- Tabs navs -->
@@ -127,6 +127,20 @@
 
                               {% endfor %}
                             </ul>
+
+                        {% if percentage %}
+
+                                 <li class="list-group-item d-flex align-items-center border-0 mb-2 rounded"
+                                      style="background-color: #f4f6f7;">
+
+                                           <img src="{{ percentage }}"
+                                                height="50%"
+                                             class="img-fluid"
+                                             alt="Responsive image">
+
+                                    </li>
+
+                        {% endif %}
                     </div>
 
 

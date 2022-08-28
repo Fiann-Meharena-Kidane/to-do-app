@@ -186,6 +186,41 @@ def completed():
     return render_template('index.html', tasks=list_of_finished_task)
 
 
+@app.route('/progress')
+def progress():
+    list_of_active_task = []
+    all_active_tasks = Task.query.filter_by(status='active')
+    # get all active ones, then filter only those with id same as the current user,
+
+    for task in all_active_tasks:
+        if task.user_id == current_user.id:
+            list_of_active_task.append(task)
+    number_of_active=len(list_of_active_task)
+
+    list_of_finished_task = []
+    all_finished_tasks = Task.query.filter_by(status='done')
+    for task in all_finished_tasks:
+        if task.user_id == current_user.id:
+            list_of_finished_task.append(task)
+    number_of_finished=len(list_of_finished_task)
+
+    # get number of active and finished, calculate percentile,
+    try:
+        percentage=(number_of_finished/(number_of_active + number_of_finished))*100
+    except ZeroDivisionError:
+        percentage=0
+    else:
+        percentage=round(percentage)
+
+    link_start="https://quickchart.io/chart?c={type:'radialGauge',data:{datasets:[{data:["
+    link_end="],backgroundColor:'green'}]}}"
+
+    complete_link=link_start+str(percentage)+link_end
+
+    return render_template('index.html', year=current_year, percentage=complete_link)
+    # pass percentage
+
+
 @app.route('/logout')
 def logout():
     logout_user()
