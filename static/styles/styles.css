@@ -11,6 +11,10 @@ text-align:center;
 
 }
 
+.home{
+margin-right:7%;}
+
+
 .logout :hover{
 transform: scale(1.2);
 transition-duration:1s;

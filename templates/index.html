@@ -46,7 +46,9 @@
               {% if messages %}
                 <div class=flashes>
                 {% for message in messages %}
-                  <h4>{{ message }}</h4>
+
+                  <div class="alert alert-success" role="alert">{{ message }}</div>
+
                 {% endfor %}
                 </div>
               {% endif %}
@@ -61,6 +63,7 @@
                           <a href="{{ url_for('logout') }}">
                             <i style="color:black;" class="fa-solid fa-right-from-bracket fa-2xl"></i>
                           </a>
+
 
                       </div>
 
