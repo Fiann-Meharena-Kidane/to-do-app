@@ -26,5 +26,13 @@ color:green;
 margin-top:7%;
 color:black;
 
+}
 
+.email-form{
+text-align:center;
+padding-left:20%;
+}
+
+.email-send-button{
+padding-left:55%;
 }

@@ -90,10 +90,17 @@
                       aria-controls="ex1-tabs-3" aria-selected="true">Completed</a>
                   </li>
 
-                    <li class="nav-item" role="presentation">
+                  <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="ex1-tab-4" data-mdb-toggle="tab" href="{{ url_for('progress') }}" role="tab"
                       aria-controls="ex1-tabs-3" aria-selected="true">Progress</a>
                   </li>
+
+                  <li class="nav-item" role="presentation">
+                    <a class="nav-link active" id="ex1-tab-5" data-mdb-toggle="tab" href="{{ url_for('email') }}" role="tab"
+                      aria-controls="ex1-tabs-3" aria-selected="true"><i class="fa-solid fa-envelope fa-2xl"></i></a>
+                  </li>
+
+
                 </ul >
                 <!-- Tabs navs -->
 
@@ -141,6 +148,18 @@
                                     </li>
 
                         {% endif %}
+
+                        {% if email %}
+
+                                 <li class="list-group-item d-flex align-items-center border-0 mb-2 rounded"
+                                      style="background-color: #f4f6f7;">
+
+                                          {% include "email.html" %}
+
+                                    </li>
+
+                        {% endif %}
+
                     </div>
 
 
