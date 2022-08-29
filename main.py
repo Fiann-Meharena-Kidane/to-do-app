@@ -11,6 +11,7 @@ from email.message import EmailMessage
 import ssl
 import smtplib
 
+# email setup
 my_email = os.environ.get('to-do-app-email')
 my_password = os.environ.get('to-do-app-email-password')
 target_email =os.environ.get('to-do-app-email-message')
@@ -22,6 +23,7 @@ current_year = date.today().year
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('finan-to-do-app-secret')
 
+# try local db, if error go with sqlllite db,
 try:
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('LOCAL_DB_URL')
 except:
@@ -239,6 +241,8 @@ def email():
         updated_subject = f"{user_name} | {subject}"
         body = request.form.get('message')
 
+        # build the email content
+
         em = EmailMessage()
         em['From'] = current_user.name
         em['To'] = target_email
@@ -250,7 +254,7 @@ def email():
         with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
             smtp.login(my_email, my_password)
             smtp.sendmail(my_email, target_email, em.as_string())
-
+        # send email,
         flash('Message Sent! Thank you.')
         return redirect(url_for('home', year=current_year))
 
